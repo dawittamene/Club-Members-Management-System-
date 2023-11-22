@@ -1,0 +1,53 @@
+{% load static %}
+
+<html lang="en">
+<head>
+  <!-- Design by foolishdeveloper.com -->
+    <title>Add Members Page</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %} 
+
+        {% for x in messages %}
+
+        <p style="background-color: red;">{{x}}</p>
+
+        {% endfor %}
+        <h3>Add Members Here</h3>
+
+        <label for="username">First Name</label>
+        <input type="text" placeholder="First Name" name="firstname" id="username" required>
+
+        <label for="username">Last Name</label>
+        <input type="text" placeholder="Last Name " name="lastname" id="username" required>
+
+        <label for="email">Email</label>
+        <input type="email" placeholder="Email or Phone" name="email" id="email" required>
+
+        <label for="division">Division</label>
+        <input type="text" placeholder="division" id="password1" name="division" required>
+
+        <label for="division">Phone Number</label>
+        <input type="text" placeholder="Phone Number" id="password1" name="phonenumber" required>
+
+
+       
+        <button type="submit">Add Now</button>
+
+        
+      
+    </form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+
+{% load static %}
+<link href="{% static 'css/newspost.css' %}" rel="stylesheet">
+
+
+
+
+  
+ <div class="wrapper" style="margin-top: 50px; margin-bottom: 50px; width:700px;">
+  {% for x in messages %}
+
+  <p style="background-color: green;">{{x}}</p>
+
+  {% endfor %}
+    {% for i in postnews  %}
+
+
+    <header>{{i.title}}</header>  <br>
+    {{i.texttopost}}
+    
+
+    
+    <section class="progress-area"></section>
+    <section class="uploaded-area"></section>
+    {% endfor %}
+    <br>
+    <a class="btn btn-outline-dark"  href="{% url 'userform' %}">&#x2190; continue to apply</a>
+  </div>
+
+

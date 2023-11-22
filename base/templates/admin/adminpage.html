@@ -1,0 +1,167 @@
+{% load static %}
+
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+   
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link href="{% static "css/table.css" %}" rel="stylesheet">
+
+    </head>
+    <body>
+      
+      <div class="container">
+        <nav>
+          <ul>
+            <li><a href="{% url 'adminpage' %}" class="logo">
+                <img src="{% static 'images/logo.png'%}">
+              <span class="nav-item">Admin</span>
+            </a></li>
+            <li><a href="{% url 'adminpage' %}">
+              <i class="fas fa-menorah"></i>
+              <span class="nav-item">Dashboard</span>
+            </a></li>
+            <li><a href="{% url 'newspost' %}">
+              <i class="fas fa-Upload "></i>
+              <span class="nav-item">Post News</span>
+            </a></li>
+            <li><a href="{% url 'addmembers' %}">
+              <i class="fas fa-plus"></i>
+              <span class="nav-item">Add Members</span>
+            </a></li>
+            
+    
+            
+          </ul>
+        </nav>
+        
+    
+    
+        <section class="main">
+          <div class="main-top">
+            <h1>CMMSP Admin Page
+              {% for x in messages %}
+
+              <p style="background-color: green;">{{x}}</p>
+      
+              {% endfor %}
+            </h1>
+          </div>
+          <div class="users">
+            <div class="card">
+              <img src="{% static 'images/logo.png'%}">
+              
+              <h4>Total Members</h4><br>
+              <div class="per">
+                <table>
+                  <tr>
+                    <td><span>{{total_members}}</span></td>
+                  </tr>
+                
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <img src="{% static 'images/logo.png'%}">
+
+              <h4>Dev Members</h4><br>
+              <div class="per">
+                <table>
+                  <tr>
+                    <td><span>{{dev}}</span></td>
+                  </tr>
+               
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <img src="{% static 'images/logo.png'%}">
+
+              <h4>Cpd Members</h4><br>
+              <div class="per">
+                <table>
+                  <tr>
+                    <td><span>{{cpd}}</span></td>
+                  </tr>
+               
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <img src="{% static 'images/logo.png'%}">
+
+              <h4>Cbd Members</h4><br>
+              <div class="per">
+                <table>
+                  <tr>
+                    <td><span>{{cbd}}</span></td>
+                    
+                  </tr>
+               
+                </table>
+              </div>
+            </div>
+          </div>
+    
+          <section class="attendance">
+            <div class="attendance-list">
+              <h1>Members List</h1>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Division</th>
+                    <th>Phone Number</th>
+                    <th>View</th>
+
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for i in addmembers %}
+
+                    <tr>
+                      <td>{{i.id}}</td>
+
+                      <td>{{i.firstname}}</td>
+                      <td>{{i.lastname}}</td>
+                      <td>{{i.email}}</td>
+                      <td>{{i.division}}</td>
+                      <td>{{i.phonenumber}}</td>
+                      <td><a href="{% url "edit" i.id %}">View</a></td>
+                  
+                    </tr>
+                 {% endfor %}
+                 
+                  <!-- <tr >
+                    <td>05</td>
+                    <td>Salina</td>
+                    <td>Coding</td>
+                    <td>03-24-22</td>
+                    <td>9:00AM</td>
+                    <td>4:00PM</td>
+                    <td><button>View</button></td>
+                  </tr>
+                  <tr >
+                    <td>06</td>
+                    <td>Tara Smith</td>
+                    <td>Testing</td>
+                    <td>03-24-22</td>
+                    <td>9:00AM</td>
+                    <td>4:00PM</td>
+                    <td><button>View</button></td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </div>
+    
+    </body>
+    </html>
+    </span>
