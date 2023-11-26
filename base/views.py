@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm,AddMembersModelForm,PostNewsModelForm,ApplicantModelForm
-# from .decorators import unauthenticated_user,allowed_users,admin_only
+from .decorators import unauthenticated_user,allowed_users,admin_only
 
 
 
@@ -26,7 +26,7 @@ def UserRegisterForm(request):
 
 def main(request):
     return render(request, 'base/main.html')
-# @admin_only
+@admin_only
 def adminpage(request):
    
     addmembers = Members.objects.all()
@@ -52,7 +52,7 @@ def NewsUserView(request):
     postnews = PostNews.objects.all()
 
     return render(request, 'base/news.html',{'postnews':postnews})
-# @admin_only
+@admin_only
 def AddMembers(request):
     form=AddMembersModelForm()
     if request.method == 'POST':
@@ -67,9 +67,6 @@ def AddMembers(request):
     
 def Profile(request):
     return render(request, 'base/Profile.html')
-       
-   
-   
 
 
 def loginpage(request):
@@ -101,11 +98,6 @@ def signuppage(request):
 def logoutPage(request):
     logout(request)
     return redirect('loginpage')
-
-
-
-
-    
           
 def view_profile(request, id):
     member = Members.objects.get(id=id)
@@ -118,3 +110,7 @@ def view_profile(request, id):
         member.save()
         messages.success(request, 'account Saved successfully!!! ')
     return render(request, 'admin/edit.html', context={"member": member})
+
+def updateprofile(request, id):
+    profile = User.objects.get(id=id)
+    return render(request, 'base/updateprofile.html', {'profile':profile})
