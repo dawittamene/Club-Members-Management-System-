@@ -1,9 +1,10 @@
+
+from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect,HttpResponse
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm,AddMembersModelForm,PostNewsModelForm,ApplicantModelForm
@@ -114,19 +115,26 @@ def view_profile(request):
     return render(request, 'admin/edit.html', context={"member": member})
 
 def updateprofile(request):
-    profile = User.objects.filter(pk=request.user.id)
     if request.method == "POST":
-        current_password = request.POST['current_password']
-        new_password = request.POST['new_password']
-        renew_password = request.POST['renew_password']
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        renew_password = request.POST.get('renew_password')
         
-        if check_password(current_password, profile.password):
-            if new_password == renew_password:
-                profile.set_password(renew_password)
-                profile.save()
-                
+        try:
+            profile = User.objects.get(pk=request.user.id)
+            
+            if check_password(current_password, profile.password):
+                if new_password == renew_password:
+                    profile.set_password(renew_password)
+                    profile.save()
+                    return "Password updated successfully."
+                else:
+                    return "New password and confirm password do not match."
+            else:
+                return "Current password is incorrect."
+        except User.DoesNotExist:
+            return "User profile does not exist."
     
-    
-    return render(request, 'base/updateprofile.html', {'profile':profile})
+    return render(request, 'base/updateprofile.html', {})
 def Event(request):
     return render(request, 'base/event.html')
