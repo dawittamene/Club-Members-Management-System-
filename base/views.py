@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect,HttpResponse
 from .models import *
 from django.contrib import messages
@@ -66,7 +67,7 @@ def AddMembers(request):
     
     
 def Profile(request):
-    # id = id.request.User
+    id=request.user.id
     return render(request, 'base/Profile.html',{'id':id})
 
 
@@ -100,8 +101,8 @@ def logoutPage(request):
     logout(request)
     return redirect('loginpage')
           
-def view_profile(request, id):
-    member = Members.objects.get(id=id)
+def view_profile(request):
+    member = Members.objects.get(id=request.user.id)
     if request.method == 'POST':
         member.firstname = request.POST['firstname']
         member.lastname = request.POST['lastname']
@@ -112,8 +113,20 @@ def view_profile(request, id):
         messages.success(request, 'account Saved successfully!!! ')
     return render(request, 'admin/edit.html', context={"member": member})
 
-# def updateprofile(request, id):
-#     profile = User.objects.get(id=id)
-#     return render(request, 'base/updateprofile.html', {'profile':profile})
+def updateprofile(request):
+    profile = User.objects.filter(pk=request.user.id)
+    if request.method == "POST":
+        current_password = request.POST['current_password']
+        new_password = request.POST['new_password']
+        renew_password = request.POST['renew_password']
+        
+        if check_password(current_password, profile.password):
+            if new_password == renew_password:
+                profile.set_password(renew_password)
+                profile.save()
+                
+    
+    
+    return render(request, 'base/updateprofile.html', {'profile':profile})
 def Event(request):
     return render(request, 'base/event.html')
