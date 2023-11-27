@@ -17,6 +17,7 @@ urlpatterns = [
     path("event/", views.Event, name="event"),
     path("problem/", views.Problem, name="problem"),
     
+    path("updateprofile/", views.updateprofile, name="updateprofile"),
     
     
 ]

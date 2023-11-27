@@ -114,7 +114,28 @@ def view_profile(request):
         messages.success(request, 'account Saved successfully!!! ')
     return render(request, 'admin/edit.html', context={"member": member})
 
-
+def updateprofile(request):
+    if request.method == "POST":
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        renew_password = request.POST.get('renew_password')
+        
+        try:
+            profile = User.objects.get(pk=request.user.id)
+            
+            if check_password(current_password, profile.password):
+                if new_password == renew_password:
+                    profile.set_password(renew_password)
+                    profile.save()
+                    return "Password updated successfully."
+                else:
+                    return "New password and confirm password do not match."
+            else:
+                return "Current password is incorrect."
+        except User.DoesNotExist:
+            return "User profile does not exist."
+    
+    return render(request, 'base/updateprofile.html', {})
 def Event(request):
     return render(request, 'base/event.html')
 def Problem(request):
