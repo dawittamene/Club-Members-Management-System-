@@ -66,7 +66,8 @@ def AddMembers(request):
     
     
 def Profile(request):
-    return render(request, 'base/Profile.html')
+    # id = id.request.User
+    return render(request, 'base/Profile.html',{'id':id})
 
 
 def loginpage(request):
@@ -111,6 +112,8 @@ def view_profile(request, id):
         messages.success(request, 'account Saved successfully!!! ')
     return render(request, 'admin/edit.html', context={"member": member})
 
-def updateprofile(request, id):
-    profile = User.objects.get(id=id)
-    return render(request, 'base/updateprofile.html', {'profile':profile})
+# def updateprofile(request, id):
+#     profile = User.objects.get(id=id)
+#     return render(request, 'base/updateprofile.html', {'profile':profile})
+def Event(request):
+    return render(request, 'base/event.html')

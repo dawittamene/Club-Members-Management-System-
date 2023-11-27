@@ -13,5 +13,8 @@ urlpatterns = [
     path('addmembers/', views.AddMembers, name="addmembers"),
     path("newsuserview/", views.NewsUserView, name="newsuserview"),
     path("userform/", views.UserRegisterForm, name="userform"),
-    path("update/<int:id>/", views.view_profile, name="edit")
+    path("update/<int:id>/", views.view_profile, name="edit"),
+    path("event/", views.Event, name="event"),
+    
+    
 ]
