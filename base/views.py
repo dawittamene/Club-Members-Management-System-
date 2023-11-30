@@ -63,7 +63,7 @@ def AddMembers(request):
         form=AddMembersModelForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'account created successfully!!! ')
+            messages.success(request, 'Member is Added successfully ')
             return redirect('adminpage')
             
     return render(request, 'admin/addmembers.html')
@@ -145,6 +145,7 @@ def Event(request):
 @login_required(login_url="loginpage")
 def Problem(request):
     return render(request, 'base/problem.html')
+@admin_only
 def deletemembers(request,id):
     
     member = Members.objects.get(id=id)
