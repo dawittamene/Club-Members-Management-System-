@@ -41,6 +41,8 @@ def adminpage(request):
     
     context = {'addmembers':addmembers,'total_members':total_members,'dev':dev,'cpd':cpd,'cbd':cbd}
     return render(request, 'admin/adminpage.html',context)
+@admin_only
+
 def NewsPost(request):
     form=PostNewsModelForm()
     if request.method == 'POST':
@@ -66,10 +68,11 @@ def AddMembers(request):
             
     return render(request, 'admin/addmembers.html')
     
+@login_required(login_url="loginpage")
     
 def Profile(request):
-    id=request.user.id
-    return render(request, 'base/Profile.html',{'id':id})
+   
+    return render(request, 'base/Profile.html')
 
 
 def loginpage(request):
@@ -101,42 +104,55 @@ def signuppage(request):
 def logoutPage(request):
     logout(request)
     return redirect('loginpage')
-          
-def view_profile(request):
-    member = Members.objects.get(id=request.user.id)
+
+@login_required(login_url="loginpage")          
+def view_profile(request,id):
+    member = Members.objects.get(id=id)
     if request.method == 'POST':
         member.firstname = request.POST['firstname']
         member.lastname = request.POST['lastname']
         member.email = request.POST['email']
         member.division = request.POST['division']
-        member.phonenumber = request.POST['phonenumber']
         member.save()
-        messages.success(request, 'account Saved successfully!!! ')
+        messages.success(request, 'account updated successfully!!! ')
+        return redirect('adminpage')
     return render(request, 'admin/edit.html', context={"member": member})
 
-def updateprofile(request):
-    if request.method == "POST":
-        current_password = request.POST.get('current_password')
-        new_password = request.POST.get('new_password')
-        renew_password = request.POST.get('renew_password')
+# def updateprofile(request):
+#     if request.method == "POST":
+#         current_password = request.POST.get('current_password')
+#         new_password = request.POST.get('new_password')
+#         renew_password = request.POST.get('renew_password')
         
-        try:
-            profile = User.objects.get(pk=request.user.id)
+#         try:
+#             profile = User.objects.get(pk=request.user.id)
             
-            if check_password(current_password, profile.password):
-                if new_password == renew_password:
-                    profile.set_password(renew_password)
-                    profile.save()
-                    return "Password updated successfully."
-                else:
-                    return "New password and confirm password do not match."
-            else:
-                return "Current password is incorrect."
-        except User.DoesNotExist:
-            return "User profile does not exist."
+#             if check_password(current_password, profile.password):
+#                 if new_password == renew_password:
+#                     profile.set_password(renew_password)
+#                     profile.save()
+#                     return "Password updated successfully."
+#                 else:
+#                     return "New password and confirm password do not match."
+#             else:
+#                 return "Current password is incorrect."
+#         except User.DoesNotExist:
+#             return "User profile does not exist."
     
-    return render(request, 'base/updateprofile.html', {})
+    # return render(request, 'base/updateprofile.html', {})
 def Event(request):
     return render(request, 'base/event.html')
+@login_required(login_url="loginpage")
 def Problem(request):
     return render(request, 'base/problem.html')
+def deletemembers(request,id):
+    
+    member = Members.objects.get(id=id)
+    if request.method == 'POST':
+        
+        member.delete()
+        messages.success(request, 'account delete successfully!!! ')
+        return redirect('adminpage')
+    return render(request, 'admin/deletemember.html', context={"member": member})
+    
+ 

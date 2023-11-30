@@ -10,7 +10,7 @@ class CreateUserForm(UserCreationForm):
 class AddMembersModelForm(ModelForm):
     class Meta:
         model = Members
-        fields = ['id','firstname','lastname','email','division','phonenumber',]
+        fields = ['id','firstname','lastname','email','division']
         
 
 class PostNewsModelForm(ModelForm):

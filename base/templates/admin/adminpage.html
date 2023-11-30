@@ -6,6 +6,7 @@
    
     
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
     <link href="{% static "css/table.css" %}" rel="stylesheet">
 
     </head>
@@ -115,8 +116,9 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Division</th>
-                    <th>Phone Number</th>
-                    <th>View</th>
+                    <th>view</th>
+                    <th>delete</th>
+
 
                   </tr>
                 </thead>
@@ -131,8 +133,10 @@
                       <td>{{i.lastname}}</td>
                       <td>{{i.email}}</td>
                       <td>{{i.division}}</td>
-                      <td>{{i.phonenumber}}</td>
-                      <td><a href="{% url "edit" i.id %}">View</a></td>
+                      <td><a href="{% url "edit" i.id %}" class="btn btn-primary">View</a></td>
+
+                      <td><a href="{% url "deletemembers" i.id %}" class="btn btn-primary">delete</a></td>
+
                   
                     </tr>
                  {% endfor %}

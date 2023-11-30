@@ -16,8 +16,9 @@ urlpatterns = [
     path("update/<int:id>/", views.view_profile, name="edit"),
     path("event/", views.Event, name="event"),
     path("problem/", views.Problem, name="problem"),
+    path("deletemembers/<int:id>/", views.deletemembers, name="deletemembers"),
     
-    path("updateprofile/", views.updateprofile, name="updateprofile"),
+    
     
     
 ]
